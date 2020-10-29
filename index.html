@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form class="main-form">
+    <h2>My Bookmarks</h2>
+    <div class="options">
+      <button type="submit">+New</button>
+      <select name="stars">
+        <option value="" disabled selected><span>Filter By...</span></option>
+        <option value="1">1 star</option>
+        <option value="2">2 stars</option>
+        <option value="3">3 stars</option>
+        <option value="4">4 stars</option>
+        <option value="5">5 stars</option>
+      </select>
+    </div>
+    <div class="bookmark-info"></div>
+    <div class="bookmarks"></div>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.js"
+    integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+    crossorigin="anonymous">
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
