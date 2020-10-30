@@ -34,7 +34,7 @@ function handleCreateBookmark() {
 }
 
 function handleCancelNew() {
-  $('.bookmark-info').on('click', 'form .button-cancel', function(evt) {
+  $('.bookmark-info').on('click', 'form .cancel', function(evt) {
     $('.bookmark-info').empty();
   })
 }
@@ -131,6 +131,7 @@ function render() {
               <input type="number" value="${bookmark.rating}"  class="edit-rating">
               <button type="submit" class="edit-save">Save</button>
               <button type="button" class="delete"> X </button>
+              <button type="reset" class="cancel"> Cancel </button>
             </div>
           </form>
         </div>`

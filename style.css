@@ -2,6 +2,7 @@ body {
   display: flex;
   justify-content: center;
   text-align: center;
+  width: 100%;
 }
 
 .main-form button {
@@ -17,6 +18,14 @@ body {
   height: 50px;
 }
 
+.bookmark form {
+  display: flex;
+}
+
+.bookmark form div:nth-child(*) {
+  flex: 1/2;
+}
+
 .hidden {
   display: none;
   border: solid;
@@ -27,14 +36,11 @@ body {
   border-width: 1px;
 }
 
-.bookmark input {
+/* .bookmark input {
   border: none;
-}
+} */
 
-select {
+/* select {
+  text-align-last: center;
   width: 100px;
-}
-
-option span {
-  display: flex;
 }
