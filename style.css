@@ -1,3 +1,40 @@
-.results {
-  margin-top: 25px;
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.main-form button {
+  padding: 5px 20px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bookmark-info {
+  height: 50px;
+}
+
+.hidden {
+  display: none;
+  border: solid;
+}
+
+.bookmark {
+  border: solid;
+  border-width: 1px;
+}
+
+.bookmark input {
+  border: none;
+}
+
+select {
+  width: 100px;
+}
+
+option span {
+  display: flex;
 }
