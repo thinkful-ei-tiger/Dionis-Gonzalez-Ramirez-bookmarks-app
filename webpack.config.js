@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './docs/script.js',
+  entry: './src/script.js',
   output: {
     path: __dirname + '/dist',
     filename: 'index_bundle.js'
@@ -9,7 +9,7 @@ module.exports = {
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: './docs/index.html',
+      template: './src/index.html',
     })
   ],
   module: {
@@ -22,7 +22,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpe?g|gif)$/,
         use: [
           'file-loader'
         ]
