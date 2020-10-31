@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import {store} from './data';
 import api from './api';
+// import './style.css'
 
 function handleNewBookmark() {
 	$('.main-form').submit(function(evt) {
