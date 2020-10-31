@@ -7,14 +7,14 @@ function handleNewBookmark() {
     $('.bookmark-info').empty(); // Using .html() instead didn't work, troubleshooted with a TA
     $('.bookmark-info').append(
       `<form class="bookmark-form">
-        <label>Title</label>
-        <input type="text" class="title">
-        <label>URL</label>
-        <input type="text" class="url">
-        <label>Description</label>
-        <input type="text" class="desc">
-        <label>Rating</label>
-        <input type="number" class="rating">
+        <label for="title">Title</label>
+        <input type="text" class="title" name="title">
+        <label for="url">URL</label>
+        <input type="text" class="url" name="url">
+        <label for="description">Description</label>
+        <input type="text" class="desc" name="description">
+        <label for="rating">Rating</label>
+        <input type="number" class="rating" name="rating">
         <button type="submit" class="button-save">Save</button>
         <button type="button" class="button-cancel">Cancel</button>
       </form>`
@@ -41,8 +41,12 @@ function handleCancelNew() {
 
 function handleEditBookmark() {
   $('.bookmarks').on('click', '.bookmark', function(evt) {
+    $('.bookmark').addClass('hidden-color').removeClass('expanded-color');
     $('.bookmark div').addClass('hidden');
+    $('.bookmark input').removeClass('input-expanded').addClass('input-hidden')
+    $(this).removeClass('hidden-color').addClass('expanded-color');
     $(this).find('div').removeClass('hidden');
+    $(this).find('input').addClass('input-expanded');
   })
 }
 
@@ -58,6 +62,13 @@ function handleEditSave() {
     .then(function() {
       render();
     })
+  })
+}
+
+function handleCancelEdit() {
+  $('.bookmarks').on('click', '.edit-cancel', function(evt) {
+    $(this).parent().parent().addClass('hidden');
+    render();
   })
 }
 
@@ -83,18 +94,21 @@ function handleFilterBookmarks() {
       .filter(bookmark => bookmark.rating >= $('select').val())
       .forEach(bookmark => {
         html +=
-          `<div class="bookmark" data-item-id="${bookmark.id}">
-            <form>
-              <input type="text" value="${bookmark.title}" class="edit-title">
-              <input type=text" value="${bookmark.url}"  class="edit-url">
+        `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
+          <form>
+            <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title">
+            <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL">
+            <div class="hidden">
+              <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
+              <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating">
               <div class="hidden">
-                <input type="text" value="${bookmark.desc}"  class="edit-desc">
-                <input type="number" value="${bookmark.rating}"  class="edit-rating">
                 <button type="submit" class="edit-save">Save</button>
-                <button type="button" class="delete"> X </button>
+                <button type="reset" class="edit-cancel"> Cancel </button>
+                <button type="button" class="delete"> x </button>
               </div>
-            </form>
-          </div>`
+            </div>
+          </form>
+        </div>`
       })
       $('.bookmarks').empty();
       $('.bookmarks').append(html);
@@ -122,19 +136,21 @@ function render() {
     array.forEach(bookmark => {
       store.bookmarks.push(bookmark)
       html +=
-        `<div class="bookmark" data-item-id="${bookmark.id}">
-          <form>
-            <input type="text" value="${bookmark.title}" class="edit-title">
-            <input type=text" value="${bookmark.url}"  class="edit-url">
+        `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
+        <form>
+          <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title">
+          <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL">
+          <div class="hidden">
+            <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
+            <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating">
             <div class="hidden">
-              <input type="text" value="${bookmark.desc}"  class="edit-desc">
-              <input type="number" value="${bookmark.rating}"  class="edit-rating">
               <button type="submit" class="edit-save">Save</button>
-              <button type="button" class="delete"> X </button>
-              <button type="reset" class="cancel"> Cancel </button>
+              <button type="reset" class="edit-cancel"> Cancel </button>
+              <button type="button" class="delete"> x </button>
             </div>
-          </form>
-        </div>`
+          </div>
+        </form>
+      </div>`
     })
     $('.bookmarks').empty();
     $('.bookmarks').append(html);
@@ -157,6 +173,7 @@ function main() {
   handleCreateBookmark()
   handleLiveValues();
   handleCancelNew();
+  handleCancelEdit();
   handleEditBookmark();
   handleEditSave();
   handleDelete();
