@@ -97,13 +97,13 @@ function handleFilterBookmarks() {
 					.filter(bookmark => bookmark.rating >= $('select').val())
 					.forEach(bookmark => {
 						html +=
-							`<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
+              `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
                 <form>
                   <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
                   <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
                   <div class="hidden">
                     <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-                    <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating" required>
+                    ${renderRating(bookmark.rating)}
                     <div class="hidden">
                       <button type="submit" class="edit-save">Save</button>
                       <button type="reset" class="edit-cancel"> Cancel </button>
