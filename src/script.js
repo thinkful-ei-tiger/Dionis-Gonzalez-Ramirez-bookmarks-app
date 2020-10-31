@@ -119,18 +119,19 @@ function handleFilterBookmarks() {
 	});
 }
 
-function handleLiveValues() {
+function handleLiveValues() { 
 	$('.bookmark-info').on('blur', '.title', function() {
-		$('.url').val(`https://www.${$('.title').val().toLowerCase()}.com`);
+		$('.url').val(`https://www.${($('.title').val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
+  });
+
+  $('.bookmark-info').on('blur', '.title', function() {
+		$(this).parent().find('.desc').val(`${$(this).val().slice(0, 1).toUpperCase() + $(this).val().slice(1).toLowerCase()} Homepage`);
 	});
-	$('.bookmark-info').one('focus', '.rating', function() {
-		$('.rating').val(5);
-	});
-	$('.bookmarks').on('blur', '.edit-title', function() {
-		$(this).parent().find('.edit-url').val(`https://www.${$(this).val().toLowerCase()}.com`);
-	});
-	$('.bookmarks').on('blur', '.edit-rating', function() {
-		$(this).parent().find('.edit-url').val(`https://www.${$(this).val().toLowerCase()}.com`);
+  $('.bookmarks').on('blur', '.edit-title', function() {
+		$(this).parent().find('.edit-url').val(`https://www.${($(this).val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
+  });
+  $('.bookmarks').on('blur', '.edit-title', function() {
+		$(this).parent().find('.edit-desc').val(`${$(this).val().slice(0, 1).toUpperCase()}${$(this).val().slice(1).toLowerCase()} Homepage`);
 	});
 }
 
