@@ -8,9 +8,9 @@ function handleNewBookmark() {
     $('.bookmark-info').append(
       `<form class="bookmark-form">
         <label for="title">Title</label>
-        <input type="text" class="title" name="title">
+        <input type="text" class="title" name="title" required>
         <label for="url">URL</label>
-        <input type="text" class="url" name="url">
+        <input type="text" class="url" name="url" required>
         <label for="description">Description</label>
         <input type="text" class="desc" name="description">
         <label for="rating">Rating</label>
@@ -98,11 +98,11 @@ function handleFilterBookmarks() {
         html +=
         `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
           <form>
-            <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title">
-            <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL">
+            <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
+            <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
             <div class="hidden">
               <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-              <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating">
+              <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating" required>
               <div class="hidden">
                 <button type="submit" class="edit-save">Save</button>
                 <button type="reset" class="edit-cancel"> Cancel </button>
@@ -128,6 +128,22 @@ function handleLiveValues() {
   $('.bookmarks').on('blur', '.edit-title', function(evt) {
     $(this).parent().find('.edit-url').val(`https://www.${$(this).val().toLowerCase()}.com`)
   })
+  $('.bookmarks').on('blur', '.edit-rating', function(evt) {
+    $(this).parent().find('.edit-url').val(`https://www.${$(this).val().toLowerCase()}.com`)
+  })
+}
+
+function renderRating(num) {
+  let html = '';
+  let selected = '';
+  for (let i=1; i<=5; i++) {
+    selected = (num === i) ? selected = ' selected' : '';
+    html += `<option value="${i}"${selected}>${'&#127775;'.repeat(i)}</option>`
+  }
+  return  `<select class="edit-rating input-hidden" name="edition-rating" required>
+            <option value="" disabled>Rating &#127775;</option>
+            ${html}
+          </select>`  
 }
 
 function render() {
@@ -140,11 +156,11 @@ function render() {
       html +=
         `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
         <form>
-          <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title">
-          <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL">
+          <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
+          <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
           <div class="hidden">
             <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-            <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating">
+            ${renderRating(bookmark.rating)}
             <div class="hidden">
               <button type="submit" class="edit-save">Save</button>
               <button type="reset" class="edit-cancel"> Cancel </button>

@@ -9,12 +9,13 @@ html {
 
 body {
   background-image: linear-gradient(white, gray);
-  min-height: fit-content;
   border: solid;
   border-width: 3px;
   border-color: black;
   border-radius: 15px;
   padding-bottom: 25px;
+  min-height: 70%;
+  min-width: 400px;
 }
 
 .options {
@@ -37,6 +38,7 @@ body {
 
 .bookmarks {
   margin: 1px;
+  margin-top: 40px;
   border: solid;
   border-width: 1px;
   border-radius: 5px;
@@ -68,6 +70,11 @@ body {
 .input-hidden {
   background-color:  rgb(29, 29, 126);
   color: rgba(255, 255, 255, 0.863);
+}
+
+.edit-desc {
+  margin-top: 8px;
+  margin-left: -45px;
 }
 
 .input-expanded {
