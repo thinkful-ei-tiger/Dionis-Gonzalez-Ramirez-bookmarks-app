@@ -18,7 +18,8 @@ function createNewBookmark(bookmark) {
 			'Content-Type': 'application/json'
 		},
 		body: body
-	});
+  })
+  .catch(error => console.log(error.message));
 }
 
 function editBookmark(id, title, url, desc, rating) {
@@ -35,8 +36,7 @@ function editBookmark(id, title, url, desc, rating) {
     },
     body: body
   })
-  .then(res => res.json())
-  .then(resJSON => console.log(resJSON));
+  .catch(error => console.log(error.message));
 }
 
 function deleteBookmark(id) {
@@ -49,8 +49,7 @@ function deleteBookmark(id) {
       id: id
     })
   })
-  .then(res => res.json())
-  .then(resJSON => console.log(resJSON));
+  .catch(error => console.log(error.message));
 }
 
 export default {

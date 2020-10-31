@@ -18,7 +18,7 @@ function handleNewBookmark() {
         <input type="text" class="desc" name="description">
         <label for="rating">Rating</label>
         <div>
-          <input type="number" class="rating" min="1" max="5" name="rating">
+          ${renderRating(5)}
           <button type="submit" class="button-save">Save</button>
           <button type="button" class="button-cancel">Cancel</button>
         </div>
@@ -81,7 +81,6 @@ function handleDelete() {
 	$('.bookmarks').on('click', '.delete', function(evt) {
 		evt.preventDefault();
 		let id = $(this).closest('.bookmark').data('item-id');
-		console.log(id);
 		api.deleteBookmark(id)
 			.then(function() {
 				render();
@@ -181,7 +180,7 @@ function render() {
 function getNewValues() {
 	const url = $('.url').val();
 	let title = $('.title').val();
-	let rating = $('.rating').val();
+  let rating = $('.edit-rating').val();
 	title = title.slice(0, 1).toUpperCase() + title.slice(1).toLowerCase();
 	if (rating === '') rating = 5;
 	const desc = $('.desc').val();
