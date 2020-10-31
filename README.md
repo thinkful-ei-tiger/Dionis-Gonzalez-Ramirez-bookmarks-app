@@ -1,6 +1,6 @@
 Dio's First Bookmarks App:
 -----
-GH Live: https://thinkful-ei-tiger.github.io/Dionis-Gonzalez-Ramirez-bookmarks-app/
+GH Live: https://thinkful-ei-tiger.github.io/Dionis-Gonzalez-Ramirez-bookmarks-app/ \
 First bookmark app. Fully functional, just maybe in need of some CSS remastering.
 
 User Stories
