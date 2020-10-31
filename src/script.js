@@ -1,8 +1,6 @@
-import {
-	store
-}
-from './data.js';
-import api from './api.js';
+import {store} from './data';
+import api from './api';
+import $ from 'jquery';
 
 function handleNewBookmark() {
 	$('.main-form').submit(function(evt) {
