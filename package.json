@@ -2,7 +2,7 @@
   "name": "bookmark-app",
   "version": "1.0.0",
   "description": "",
-  "main": "api.js",
+  "main": "script.js",
   "scripts": {
     "start": "webpack-dev-server", 
     "build": "webpack --mode production"
