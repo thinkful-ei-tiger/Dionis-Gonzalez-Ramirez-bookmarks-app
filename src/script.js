@@ -148,6 +148,12 @@ function renderRating(num) {
           </select>`;
 }
 
+function handleVisitSite() {
+  $('.bookmarks').on('click', '.visit-site', function() {
+    window.open($(this).closest('form').find('.edit-url').val())
+  })
+}
+
 function render() {
 	api.getBookmarks()
 		.then(res => res.json())
@@ -161,10 +167,15 @@ function render() {
               <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
               <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
               <div class="hidden">
-                <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-                ${renderRating(bookmark.rating)}
+                <div>
+                  <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
+                </div>
+                <div>
+                  ${renderRating(bookmark.rating)}
+                </div>
                 <div class="hidden">
                   <button type="submit" class="edit-save">Save</button>
+                  <button type="button" class="visit-site">Visit Site</button>
                   <button type="reset" class="edit-cancel"> Cancel </button>
                   <button type="button" class="delete"> X </button>
                 </div>
@@ -195,7 +206,8 @@ function main() {
 	handleCancelNew();
 	handleCancelEdit();
 	handleEditBookmark();
-	handleEditSave();
+  handleEditSave();
+  handleVisitSite();
 	handleDelete();
 	handleFilterBookmarks();
 }
