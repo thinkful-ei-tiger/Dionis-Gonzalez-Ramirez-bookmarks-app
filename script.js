@@ -14,9 +14,11 @@ function handleNewBookmark() {
         <label for="description">Description</label>
         <input type="text" class="desc" name="description">
         <label for="rating">Rating</label>
-        <input type="number" class="rating" name="rating">
-        <button type="submit" class="button-save">Save</button>
-        <button type="button" class="button-cancel">Cancel</button>
+        <div>
+          <input type="number" class="rating" min="1" max="5" name="rating">
+          <button type="submit" class="button-save">Save</button>
+          <button type="button" class="button-cancel">Cancel</button>
+        </div>
       </form>`
     )
   })
@@ -34,7 +36,7 @@ function handleCreateBookmark() {
 }
 
 function handleCancelNew() {
-  $('.bookmark-info').on('click', 'form .cancel', function(evt) {
+  $('.bookmark-info').on('click', 'form .button-cancel', function(evt) {
     $('.bookmark-info').empty();
   })
 }
@@ -104,7 +106,7 @@ function handleFilterBookmarks() {
               <div class="hidden">
                 <button type="submit" class="edit-save">Save</button>
                 <button type="reset" class="edit-cancel"> Cancel </button>
-                <button type="button" class="delete"> x </button>
+                <button type="button" class="delete"> X </button>
               </div>
             </div>
           </form>
@@ -146,7 +148,7 @@ function render() {
             <div class="hidden">
               <button type="submit" class="edit-save">Save</button>
               <button type="reset" class="edit-cancel"> Cancel </button>
-              <button type="button" class="delete"> x </button>
+              <button type="button" class="delete"> X </button>
             </div>
           </div>
         </form>
