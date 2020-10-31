@@ -3,4 +3,4 @@ export const store = {
   adding: false,
   error: null,
   filter: 0
-}
+};

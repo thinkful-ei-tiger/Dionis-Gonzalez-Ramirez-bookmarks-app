@@ -1,54 +1,61 @@
-const baseURL = `https://thinkful-list-api.herokuapp.com/dionisggr/bookmarks`
+const baseURL = `https://thinkful-list-api.herokuapp.com/dionisggr/bookmarks`;
 
 function getBookmarks() {
-  return fetch(baseURL)
+	return fetch(baseURL);
 }
 
 function createNewBookmark(bookmark) {
-  let [title, rating, desc, url] = bookmark;
-  const body = JSON.stringify({
-    title: title,
-    rating: rating,
-    url: url,
-    desc: desc,
-  })
-  return fetch(baseURL, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: body
-  })
+	let [title, rating, desc, url] = bookmark;
+	const body = JSON.stringify({
+		title: title,
+		rating: rating,
+		url: url,
+		desc: desc,
+	});
+	return fetch(baseURL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: body
+	});
 }
 
 function editBookmark(id, title, url, desc, rating) {
-  const body = JSON.stringify({
-    title: title,
-    url: url,
-    desc: desc,
-    rating: rating
-  })
-  return fetch(`${baseURL}/${id}`, {
+	const body = JSON.stringify({
+		title: title,
+		url: url,
+		desc: desc,
+		rating: rating
+	});
+	return fetch(`${baseURL}/${id}`, {
     method: 'PATCH',
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: body
   })
   .then(res => res.json())
-  .then(resJSON => console.log(resJSON))
+  .then(resJSON => console.log(resJSON));
 }
 
 function deleteBookmark(id) {
-  return fetch(`${baseURL}/${id}`, {
+	return fetch(`${baseURL}/${id}`, {
     method: 'DELETE',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({id: id})
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: id
+    })
   })
   .then(res => res.json())
-  .then(resJSON => console.log(resJSON))
+  .then(resJSON => console.log(resJSON));
 }
 
 export default {
-  getBookmarks,
-  createNewBookmark,
-  editBookmark,
-  deleteBookmark
-}
-
+	getBookmarks,
+	createNewBookmark,
+	editBookmark,
+	deleteBookmark
+};

@@ -100,20 +100,20 @@ function handleFilterBookmarks() {
 					.forEach(bookmark => {
 						html +=
 							`<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
-          <form>
-            <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
-            <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
-            <div class="hidden">
-              <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-              <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating" required>
-              <div class="hidden">
-                <button type="submit" class="edit-save">Save</button>
-                <button type="reset" class="edit-cancel"> Cancel </button>
-                <button type="button" class="delete"> X </button>
-              </div>
-            </div>
-          </form>
-        </div>`;
+                <form>
+                  <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
+                  <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
+                  <div class="hidden">
+                    <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
+                    <input type="number" value="${bookmark.rating}"  class="edit-rating input-hidden" name="edition-rating" placeholder="Rating" required>
+                    <div class="hidden">
+                      <button type="submit" class="edit-save">Save</button>
+                      <button type="reset" class="edit-cancel"> Cancel </button>
+                      <button type="button" class="delete"> X </button>
+                    </div>
+                  </div>
+                </form>
+              </div>`;
 					});
 				$('.bookmarks').empty();
 				$('.bookmarks').append(html);
@@ -158,20 +158,20 @@ function render() {
 				store.bookmarks.push(bookmark);
 				html +=
 					`<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
-        <form>
-          <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
-          <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
-          <div class="hidden">
-            <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
-            ${renderRating(bookmark.rating)}
-            <div class="hidden">
-              <button type="submit" class="edit-save">Save</button>
-              <button type="reset" class="edit-cancel"> Cancel </button>
-              <button type="button" class="delete"> X </button>
-            </div>
-          </div>
-        </form>
-      </div>`;
+            <form>
+              <input type="text" value="${bookmark.title}" class="edit-title input-hidden" name="edition-title" placeholder="Title" required>
+              <input type=text" value="${bookmark.url}"  class="edit-url input-hidden" name="edition-url" placeholder="URL" required>
+              <div class="hidden">
+                <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
+                ${renderRating(bookmark.rating)}
+                <div class="hidden">
+                  <button type="submit" class="edit-save">Save</button>
+                  <button type="reset" class="edit-cancel"> Cancel </button>
+                  <button type="button" class="delete"> X </button>
+                </div>
+              </div>
+            </form>
+          </div>`;
 			});
 			$('.bookmarks').empty();
 			$('.bookmarks').append(html);
