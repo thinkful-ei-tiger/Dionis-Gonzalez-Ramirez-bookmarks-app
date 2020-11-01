@@ -128,14 +128,13 @@ function handleLiveValues() {
 	$('.bookmark-info').on('blur', '.title', function() {
 		$('.url').val(`https://www.${($('.title').val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
   });
-
-  $('.bookmark-info').on('blur', '.title', function() {
+  $('.bookmark-info').one('blur', '.title', function() {
 		$(this).parent().find('.desc').val(`${$(this).val().slice(0, 1).toUpperCase() + $(this).val().slice(1).toLowerCase()} Homepage`);
 	});
   $('.bookmarks').on('blur', '.edit-title', function() {
 		$(this).parent().find('.edit-url').val(`https://www.${($(this).val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
   });
-  $('.bookmarks').on('blur', '.edit-title', function() {
+  $('.bookmarks').one('blur', '.edit-title', function() {
 		$(this).parent().find('.edit-desc').val(`${$(this).val().slice(0, 1).toUpperCase()}${$(this).val().slice(1).toLowerCase()} Homepage`);
 	});
 }
@@ -204,17 +203,17 @@ function getNewValues() {
 }
 
 function main() {
-	render();
-	handleNewBookmark();
-	handleCreateBookmark();
-	handleLiveValues();
-	handleCancelNew();
-	handleCancelEdit();
-	handleEditBookmark();
+  render();
+  handleNewBookmark();
+  handleCreateBookmark();
+  handleLiveValues();
+  handleCancelNew();
+  handleCancelEdit();
+  handleEditBookmark();
   handleEditSave();
   handleVisitSite();
-	handleDelete();
-	handleFilterBookmarks();
+  handleDelete();
+  handleFilterBookmarks();
 }
 
 $(main);
