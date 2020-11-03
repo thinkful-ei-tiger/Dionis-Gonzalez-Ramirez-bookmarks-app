@@ -202,7 +202,12 @@ function getNewValues() {
 	return [title, rating, desc, url];
 }
 
+// renderInitialForm() {
+
+// }
+
 function main() {
+  // renderInitialForm();
   render();
   handleNewBookmark();
   handleCreateBookmark();
