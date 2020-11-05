@@ -19,7 +19,10 @@ function createNewBookmark(bookmark) {
 		},
 		body: body
   })
-  .catch(error => console.log(error.message));
+  .then(res => {
+    if (res.ok) return res.json()
+    throw new Error(res.statusText)
+  })
 }
 
 function editBookmark(id, title, url, desc, rating) {
@@ -29,14 +32,17 @@ function editBookmark(id, title, url, desc, rating) {
 		desc: desc,
 		rating: rating
 	});
-	return fetch(`${baseURL}/${id}`, {
+	return fetch(`${baseURL}/2344${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
     body: body
   })
-  .catch(error => console.log(error.message));
+  .then(res => {
+    if (res.ok) return res.json()
+    throw new Error(res.statusText)
+  })
 }
 
 function deleteBookmark(id) {

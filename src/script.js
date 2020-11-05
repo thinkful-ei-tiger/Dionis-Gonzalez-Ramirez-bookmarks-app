@@ -33,7 +33,8 @@ function handleCreateBookmark() {
 			.then(function() {
 				$('.bookmark-info').empty();
 				render();
-			});
+      })
+      .catch(error => renderError('create bookmark'));
 	});
 }
 
@@ -63,9 +64,10 @@ function handleEditSave() {
 		let rating = $(this).find('.edit-rating').val();
 		let url = $(this).find('.edit-url').val();
 		api.editBookmark(id, title, url, desc, rating)
-			.then(function() {
-				render();
-			});
+    .then(function() {
+      render();
+    })
+    .catch(error => renderError());
 	});
 }
 
@@ -139,6 +141,39 @@ function handleLiveValues() {
 	});
 }
 
+function handleVisitSite() {
+  $('.bookmarks').on('click', '.visit-site', function() {
+    window.open($(this).closest('form').find('.edit-url').val())
+  })
+}
+
+function getNewValues() {
+	const url = $('.url').val();
+	let title = $('.title').val();
+  let rating = $('.edit-rating').val();
+	title = title.slice(0, 1).toUpperCase() + title.slice(1).toLowerCase();
+	if (rating === '') rating = 5;
+	const desc = $('.desc').val();
+	return [title, rating, desc, url];
+}
+
+function handleError(error) {
+  $('main').on('submit', '#try-again', function(evt) {
+    evt.preventDefault();
+    render();
+  })
+}
+
+function renderError(error) {
+  $('.main-form').empty();
+  $('.main-form').append(
+    `<form id="try-again">
+      <label>Something went wrong. Could not ${error}.</label>
+      <button type="submit">Try again</button>
+    </form>`
+  )
+}
+
 function renderRating(num) {
 	let html = '';
 	let selected = '';
@@ -150,12 +185,6 @@ function renderRating(num) {
             <option value="" disabled>Rating &#127775;</option>
             ${html}
           </select>`;
-}
-
-function handleVisitSite() {
-  $('.bookmarks').on('click', '.visit-site', function() {
-    window.open($(this).closest('form').find('.edit-url').val())
-  })
 }
 
 function render() {
@@ -192,22 +221,29 @@ function render() {
 		});
 }
 
-function getNewValues() {
-	const url = $('.url').val();
-	let title = $('.title').val();
-  let rating = $('.edit-rating').val();
-	title = title.slice(0, 1).toUpperCase() + title.slice(1).toLowerCase();
-	if (rating === '') rating = 5;
-	const desc = $('.desc').val();
-	return [title, rating, desc, url];
+function renderStart() {
+  $('main').append(
+    `<form class="main-form">
+      <h2>My Bookmarks</h2>
+      <div class="options">
+        <button type="submit">New Bookmark</button>
+        <select name="rating-stars">
+          <option value="" disabled selected>Rating &#127775;</option>
+          <option value="1">&#127775;</option>
+          <option value="2">&#127775;&#127775;</option>
+          <option value="3">&#127775;&#127775;&#127775;</option>
+          <option value="4">&#127775;&#127775;&#127775;&#127775;</option>
+          <option value="5">&#127775;&#127775;&#127775;&#127775;&#127775;</option>
+        </select>
+      </div>
+      <div class="bookmark-info"></div>
+      <div class="bookmarks"></div>
+    </form>`
+  )
 }
 
-// renderInitialForm() {
-
-// }
-
 function main() {
-  // renderInitialForm();
+  renderStart();
   render();
   handleNewBookmark();
   handleCreateBookmark();
@@ -219,6 +255,7 @@ function main() {
   handleVisitSite();
   handleDelete();
   handleFilterBookmarks();
+  handleError();
 }
 
 $(main);
