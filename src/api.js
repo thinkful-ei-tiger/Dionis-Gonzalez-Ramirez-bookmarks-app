@@ -32,7 +32,7 @@ function editBookmark(id, title, url, desc, rating) {
 		desc: desc,
 		rating: rating
 	});
-	return fetch(`${baseURL}/2344${id}`, {
+	return fetch(`${baseURL}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
@@ -55,7 +55,10 @@ function deleteBookmark(id) {
       id: id
     })
   })
-  .catch(error => console.log(error.message));
+  .then(res => {
+    if (res.ok) return res.json()
+    throw new Error(res.statusText)
+  })
 }
 
 export default {

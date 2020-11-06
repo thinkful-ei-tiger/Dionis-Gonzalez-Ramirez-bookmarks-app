@@ -121,6 +121,10 @@ body {
   background-color: rgb(9, 75, 20);
 }
 
+.error {
+  color: rgb(189, 7, 7);
+}
+
 select {
   text-align-last: center;
   width: 130px;
