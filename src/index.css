@@ -47,6 +47,10 @@ body {
   border-radius: 5px;
 }
 
+#try-again {
+  height: 25px;
+}
+
 .bookmark {
   display: flex;
   border: solid;
@@ -58,7 +62,7 @@ body {
 }
 
 .bookmark-info {
-  margin: 5px 0 25px 0;
+  margin: 5px 0 65px 0;
 }
 
 .bookmark input {
