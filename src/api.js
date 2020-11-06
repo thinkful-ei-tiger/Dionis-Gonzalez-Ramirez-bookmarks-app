@@ -1,7 +1,15 @@
+import {store} from './data'
+
 const baseURL = `https://thinkful-list-api.herokuapp.com/dionisggr/bookmarks`;
 
 function getBookmarks() {
-	return fetch(baseURL);
+   return (
+      fetch(baseURL)
+      .then(res => res.json())
+      .then(bookmarks => {
+        store.bookmarks = bookmarks.map(bookmark => bookmark)
+      })
+   )
 }
 
 function createNewBookmark(bookmark) {
