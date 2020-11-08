@@ -3,7 +3,7 @@ import { store } from './data.js';
 import api from './api.js';
 import './index.css';
 
-const App = {
+const start = {
   renderStart: function() {
     $('main').empty();
     $('main').append(
@@ -25,9 +25,11 @@ const App = {
         <div class="bookmarks"></div>
       </form>`
     )
-    this.renderBookmarkList();
+    bookmarkList.renderBookmarkList();
   }
-  ,
+}
+
+const bookmarkList = {
   generateBookmarkHTML: function(bookmark) {
     return (
       `<div class="bookmark hidden-color" data-item-id="${bookmark.id}">
@@ -39,7 +41,7 @@ const App = {
               <input type="text" value="${bookmark.desc}"  class="edit-desc input-hidden" name="edition-description" placeholder="Description">
             </div>
             <div>
-              ${this.renderRating(bookmark.rating)}
+              ${rating.renderRating(bookmark.rating)}
             </div>
             <div class="hidden">
               <button type="submit" class="edit-save">Save</button>
@@ -69,7 +71,9 @@ const App = {
       $('.bookmarks').append(html);
     })
   }
-  ,
+}
+
+const newBookmark = {
   renderNewBookmarkForm: function() {
     $('.bookmark-info').empty();
     $('.bookmark-info').append(
@@ -82,7 +86,7 @@ const App = {
           <input type="text" class="desc" name="description">
           <label for="rating">Rating</label>
           <div>
-            ${this.renderRating(5)}
+            ${rating.renderRating(5)}
             <button type="submit" class="button-save">Create</button>
             <button type="button" class="button-cancel">Cancel</button>
           </div>
@@ -115,9 +119,9 @@ const App = {
     api.createNewBookmark(bookmark)
     .then(() => {
       $('.bookmark-info').empty();
-      this.renderBookmarkList();
+      bookmarkList.renderBookmarkList();
     })
-    .catch(err => this.renderErrorForm('create bookmark'));
+    .catch(err => error.renderErrorForm('create bookmark'));
   }
   ,
   handleCancelNewBookmark: () => {
@@ -125,11 +129,9 @@ const App = {
       $('.bookmark-info').empty()
     });
   }
-  ,
-  checkValidLink: function(url) {
-    if (!(url.includes('http://') || url.includes('https://'))) this.renderErrorForm(`add url without 'http://' or 'https://'`);
-  }
-  ,
+}
+
+const deleteBookmark = {
   handleDeleteBookmark: function() {
     $('.bookmarks').on('click', '.delete', (evt) => {
       const id = $(evt.target).closest('.bookmark').data('item-id');
@@ -138,12 +140,18 @@ const App = {
   }
   ,
   deleteBookmark: function(id) {
-    store.bookmarks.splice(this.findBookmarkIndex(id), 1);
+    store.bookmarks.splice(extras.findBookmarkIndex(id), 1);
     api.deleteBookmark(id)
     .then(() => {
-      this.renderBookmarkList();
+      bookmarkList.renderBookmarkList();
     })
-    .catch(err => this.renderErrorForm('delete the bookmark'));
+    .catch(err => error.renderErrorForm('delete the bookmark'));
+  }
+}
+
+const extras = {
+  checkValidLink: function(url) {
+    if (!(url.includes('http://') || url.includes('https://'))) error.renderErrorForm(`add url without 'http://' or 'https://'`);
   }
   ,
   findBookmarkIndex: (id) => {
@@ -151,6 +159,25 @@ const App = {
     return store.bookmarks.indexOf(bookmark);
   }
   ,
+  handleLiveValues: function() {
+    const newBookmarkForm = $('.bookmark-info');
+    const bookmarks = $('.bookmarks');
+    newBookmarkForm.on('blur', '.title', function () {
+      $('.url').val(`https://www.${($('.title').val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
+    });
+    newBookmarkForm.one('blur', '.title', function () {
+      $(this).parent().find('.desc').val(`${$(this).val().slice(0, 1).toUpperCase() + $(this).val().slice(1).toLowerCase()} Homepage`);
+    });
+    bookmarks.on('blur', '.edit-title', function () {
+      $(this).parent().find('.edit-url').val(`https://www.${($(this).val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
+    });
+    bookmarks.one('blur', '.edit-title', function () {
+      $(this).parent().find('.edit-desc').val(`${$(this).val().slice(0, 1).toUpperCase()}${$(this).val().slice(1).toLowerCase()} Homepage`);
+    });
+  }
+}
+
+const editBookmark = {
   handleShowEdit: function() {
     $('.bookmarks').on('click', '.bookmark', function () {
       $('.bookmark').addClass('hidden-color').removeClass('expanded-color');
@@ -176,19 +203,19 @@ const App = {
   }
   ,
   editBookmark: function(bookmark) {
-    Object.assign(store.bookmarks[this.findBookmarkIndex(bookmark.id)], bookmark)
+    Object.assign(store.bookmarks[extras.findBookmarkIndex(bookmark.id)], bookmark)
     api.editBookmark(bookmark)
     .then(() => {
       // this.checkValidLink(bookmark.url);
-      this.renderBookmarkList();
+      bookmarkList.renderBookmarkList();
     })
-    .catch(err => this.renderErrorForm('edit the bookmark'))
+    .catch(err => error.renderErrorForm('edit the bookmark'))
   }
   ,
   handleCancelEdit: function() {
     $('.bookmarks').on('click', '.edit-cancel', (evt) => {
       $(evt.target).parent().parent().toggleClass('hidden');
-      this.renderBookmarkList();
+      bookmarkList.renderBookmarkList();
     });
   }
   ,
@@ -197,46 +224,14 @@ const App = {
       window.open($(this).closest('form').find('.edit-url').val())
     })
   }
-  ,
+}
+
+const rating = {
   handleFilterBookmarks: function() {
     $('select').on('change', () => {
       store.filter = $('select').val();
-      this.renderBookmarkList();
+      bookmarkList.renderBookmarkList();
     })
-  }
-  ,
-  renderErrorForm: (error) => {
-    $('.error').empty();
-    $('.error').append(
-      `<form id="try-again">
-        <label>Something went wrong. Could not ${error}.</label>
-        <button type="submit">Try again</button>
-      </form>`
-    )
-  }
-  ,
-  handleError: function() {
-    $('main').on('submit', '#try-again', function (evt) {
-      evt.preventDefault();
-      this.renderBookmarkList();
-    })
-  }
-  ,
-  handleLiveValues: function() {
-    const newBookmarkForm = $('.bookmark-info');
-    const bookmarks = $('.bookmarks');
-    newBookmarkForm.on('blur', '.title', function () {
-      $('.url').val(`https://www.${($('.title').val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
-    });
-    newBookmarkForm.one('blur', '.title', function () {
-      $(this).parent().find('.desc').val(`${$(this).val().slice(0, 1).toUpperCase() + $(this).val().slice(1).toLowerCase()} Homepage`);
-    });
-    bookmarks.on('blur', '.edit-title', function () {
-      $(this).parent().find('.edit-url').val(`https://www.${($(this).val().split('').filter(val => val !== ' ')).join('').toLowerCase()}.com`);
-    });
-    bookmarks.one('blur', '.edit-title', function () {
-      $(this).parent().find('.edit-desc').val(`${$(this).val().slice(0, 1).toUpperCase()}${$(this).val().slice(1).toLowerCase()} Homepage`);
-    });
   }
   ,
   generateRatingHTML: (num) => {
@@ -259,20 +254,39 @@ const App = {
   }
 }
 
+const error = {
+  renderErrorForm: (error) => {
+    $('.error').empty();
+    $('.error').append(
+      `<form id="try-again">
+        <label>Something went wrong. Could not ${error}.</label>
+        <button type="submit">Try again</button>
+      </form>`
+    )
+  }
+  ,
+  handleError: function() {
+    $('main').on('submit', '#try-again', function (evt) {
+      evt.preventDefault();
+      bookmarkList.renderBookmarkList();
+    })
+  }
+}
+
 function main() {
-  App.renderStart();
-  App.renderBookmarkList();
-  App.handleNewBookmarkForm();
-  App.handleCreateBookmark();
-  App.handleDeleteBookmark();
-  App.handleSaveEdit();
-  App.handleShowEdit();
-  App.handleCancelEdit();
-  App.handleCancelNewBookmark();
-  App.handleVisitSite();
-  App.handleLiveValues();
-  App.handleFilterBookmarks();
-  App.handleError();
+  start.renderStart();
+  bookmarkList.renderBookmarkList();
+  newBookmark.handleNewBookmarkForm();
+  newBookmark.handleCreateBookmark();
+  newBookmark.handleCancelNewBookmark();
+  editBookmark.handleSaveEdit();
+  editBookmark.handleShowEdit();
+  editBookmark.handleCancelEdit();
+  editBookmark.handleVisitSite();
+  deleteBookmark.handleDeleteBookmark();
+  extras.handleLiveValues();
+  rating.handleFilterBookmarks();
+  error.handleError();
 }
 
 $(main);
