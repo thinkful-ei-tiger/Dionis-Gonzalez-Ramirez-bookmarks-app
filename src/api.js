@@ -1,24 +1,25 @@
-import {store} from './data'
-
 const baseURL = `https://thinkful-list-api.herokuapp.com/dionisggr/bookmarks`;
 
-function getBookmarks() {
-   return (
-      fetch(baseURL)
-      .then(res => res.json())
-      .then(bookmarks => {
-        store.bookmarks = bookmarks.map(bookmark => bookmark)
-      })
-   )
+function getBookmarks(store) {
+  return (
+    fetch(baseURL)
+    .then(res => {
+      if (res.ok) return res.json()
+      throw new Error(res.statusText)
+    })
+    .then(newBookmarks => {
+      store.bookmarks = newBookmarks;
+    })
+  )
 }
 
 function createNewBookmark(bookmark) {
-	let [title, rating, desc, url] = bookmark;
+  const {title, url, description, rating} = bookmark;
 	const body = JSON.stringify({
 		title: title,
 		rating: rating,
 		url: url,
-		desc: desc,
+		desc: description,
 	});
 	return fetch(baseURL, {
 		method: 'POST',
@@ -33,7 +34,7 @@ function createNewBookmark(bookmark) {
   })
 }
 
-function editBookmark(id, title, url, desc, rating) {
+function editBookmark({id, title, url, desc, rating}) {
 	const body = JSON.stringify({
 		title: title,
 		url: url,
@@ -64,8 +65,7 @@ function deleteBookmark(id) {
     })
   })
   .then(res => {
-    if (res.ok) return res.json()
-    throw new Error(res.statusText)
+    if (!res.ok) throw new Error(res.statusText)
   })
 }
 
