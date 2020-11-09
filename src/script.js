@@ -17,7 +17,7 @@ const start = {
             <option value="2">&#127775;&#127775;</option>
             <option value="3">&#127775;&#127775;&#127775;</option>
             <option value="4">&#127775;&#127775;&#127775;&#127775;</option>
-            <option value="5" selected>&#127775;&#127775;&#127775;&#127775;&#127775;</option>
+            <option value="5">&#127775;&#127775;&#127775;&#127775;&#127775;</option>
           </select>
         </div>
         <div class="bookmark-info"></div>
